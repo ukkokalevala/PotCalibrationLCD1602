@@ -1,0 +1,35 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// Set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  // Initialize the LCD and set up the number of columns and rows
+  lcd.init();
+  lcd.backlight();
+
+  // Initialize the analog input pin
+  pinMode(A0, INPUT);
+}
+
+void loop() {
+  // Read the potentiometer value
+  int potValue = analogRead(A0);
+
+  // Map the analog value to a range of 0-100
+  int percentage = map(potValue, 0, 1023, 0, 100);
+
+  // Print the potentiometer value on the LCD
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Pot Value: ");
+  lcd.print(potValue);
+
+  lcd.setCursor(0, 1);
+  lcd.print("Percentage: ");
+  lcd.print(percentage);
+  lcd.print(" %");
+
+  delay(500);
+}
